@@ -6,8 +6,6 @@ const Battle = require('./battle');
 
 const path = require('path');
 
-require('dotenv').config();
-
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -25,17 +23,12 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-
-
-
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
 
 app.get('/location', async (req, res) => {
   const battles = await Battle.find({});
@@ -54,7 +47,6 @@ app.get('/count', async (req, res) => {
   res.json(result.length);
 });
 
-
 app.get('/search', async (req, res) => {
   const searchitem = 'Robb Stark';
   const battles = await Battle.find({
@@ -64,9 +56,7 @@ app.get('/search', async (req, res) => {
   res.json(result);
 });
 
-
 app.get('/details/:value', async (req, res) => {
-
   const searchitem = req.params.value;
   const battles = await Battle.find({
     $or: [{ location: searchitem }],
@@ -75,22 +65,22 @@ app.get('/details/:value', async (req, res) => {
   res.json(result);
 });
 
-
-
 app.get('/searchh', async (req, res) => {
   const s1 = 'Robb Stark';
-  const a1= 'Robb Stark'
+  const a1 = 'Robb Stark';
   const s2 = 'Riverrun';
   const s3 = 'siege';
   const battles = await Battle.find({
-    $and: [{
-      $or: [{ attacker_king: s1 }, { defender_king: a1 }]
-    }, { location: s2 }, { battle_type: s3 }],
+    $and: [
+      {
+        $or: [{ attacker_king: s1 }, { defender_king: a1 }],
+      },
+      { location: s2 },
+      { battle_type: s3 },
+    ],
   });
   res.json(battles);
 });
-
-
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
