@@ -5,12 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "client-install": "npm install --prefix client",
-    "server": "node server.js",
     "client": "cd client && npm start",
     "build": "cd client && npm build",
     "install-client": "cd client && npm install",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm start \" \"npm run client\"",
     "heroku-postbuild": "npm run install-client && npm run build "
   },
   "author": "",
