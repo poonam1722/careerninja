@@ -4,12 +4,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
     "client-install": "npm install --prefix client",
     "server": "node server.js",
-    "client": "npm start --prefix client",
+    "client":"cd client && npm start",
+    "build":"cd client && npm build",
+    "install-client":"cd client && npm install",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "npm run install-client && npm run build "
   },
   "author": "",
   "license": "ISC",
